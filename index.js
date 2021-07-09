@@ -3,9 +3,9 @@ const socket = require("socket.io");
 const app = express();
 
 //Starts the server
-
-let server = app.listen(4000, function () {
-  console.log("Server is running");
+const port = process.env.PORT || 4000;
+const server = app.listen(port,() => {
+  console.log('Starting server at ${port}');
 });
 
 app.use(express.static("public"));
@@ -66,7 +66,8 @@ io.on("connection", function (socket) {
 
   socket.on("leave", function(roomName){
     socket.leave(roomName);
-    socket.braodcast.to(roomName).emit("leave");
+    socket.broadcast.to(roomName).emit("leave");
+
   });
 });
 
